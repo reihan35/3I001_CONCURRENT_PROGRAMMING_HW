@@ -10,20 +10,21 @@ public class MatriceEntiere{
 	private int lignes;
 	private int colonnes;
 	private int[][] tableau;
-	
-	MatriceEntiere(int lignes, int colonnes){
+
+	/* constructeur qui cree une matrice sans l'initialiser */
+	public MatriceEntiere(int lignes, int colonnes){
 		this.lignes = lignes;
 		this.colonnes = colonnes;
 		this.tableau = new int[lignes][colonnes];
 	}
-	
-	MatriceEntiere(File fichier) throws FileNotFoundException, IOException{
+
+	/* construire qui cree une matrice 
+		 et l'initialise avec les valeurs lues dans le fichier */
+	public MatriceEntiere(File fichier) throws FileNotFoundException, IOException{
 		BufferedReader in = null;
-		
 		
 		in = new BufferedReader(new FileReader(fichier));
 		Scanner sc = new Scanner(fichier);
-		
 			
 		if (sc.hasNext()){
 			this.lignes = Integer.parseInt(sc.nextLine());
@@ -32,11 +33,13 @@ public class MatriceEntiere{
 			int i = 0;
 			String currentline;
 			this.tableau = new int[this.lignes][this.colonnes];
-			
+		
+			/* lecture des lignes du fichier */
 			while (sc.hasNext() && i<this.lignes){
-				currentline = sc.nextLine();
-				String[] tmp = currentline.split(" ");
+				currentline = sc.nextLine(); /* String comportant la ligne lue */
+				String[] tmp = currentline.split(" "); /* transformation en tableau */
 				
+				/* affectation des valeurs a la ligne i du tableau */
 				for (int j=0; j<this.colonnes; j++){
 					this.tableau[i][j] = Integer.parseInt(tmp[j]);
 				}
@@ -48,6 +51,53 @@ public class MatriceEntiere{
 		
 	}
 	
+	public void initialise_zero(){
+		for (int i=0; i<this.lignes; i++){
+			for (int j=0; j<this.colonnes; j++){
+				this.tableau[i][j] = 0;	
+			}
+		}
+	}
+
+	public void transposee(){
+		int[][] new_tab = new int[this.colonnes][this.lignes];
+		String s = "";
+
+		for (int i=0; i<this.lignes; i++){
+			for (int j=0; j<this.colonnes; j++){
+				new_tab[j][i] = this.tableau[i][j];	
+			}
+		}
+	
+		for (int i=0; i < this.colonnes; i++){
+			for (int j=0; j<this.lignes; j++){
+				s = s + new_tab[i][j] + " ";
+			}
+			s = s + "\n";
+		}
+		System.out.println(s);
+	}
+
+	public void somme(MatriceEntiere B) throws TaillesNonConcordantesException {
+		if (this.lignes != B.getLignes() || this.colonnes != B.getColonnes()){
+			throw new TaillesNonConcordantesException(this.lignes + " * " + this.colonnes + " != " + B.getLignes() + " * " + B.getColonnes());
+		}
+		else{
+			int i;
+			int j;
+			String s = "";
+
+			for (i=0; i<this.lignes; i++){
+				for (j=0; j<this.colonnes; j++){
+					int val = this.tableau[i][j] + B.getElem(i, j);
+					s = s + val + " ";
+				}
+				s = s + "\n";
+			}
+			System.out.println(s);
+		}
+	}	
+
 	public int getElem(int i, int j){
 		return this.tableau[i][j];
 	}	
@@ -55,13 +105,24 @@ public class MatriceEntiere{
 	public void setElem(int i, int j, int val){
 		this.tableau[i][j] = val;
 	}
-	
+
+	public int getLignes(){
+		return this.lignes;
+	}
+
+	public int getColonnes(){
+		return this.colonnes;
+	}
+
+
 	public String toString(){
 		String s = "";
 		for(int i=0; i<this.lignes; i++){
 			for(int j=0; j<this.colonnes; j++){
-				s = s + Integer.toString(tableau[i][j]);
+				s = s + Integer.toString(tableau[i][j]) + " "; 
 			}
+			if (i != this.lignes - 1)
+				s = s + "\n";
 		}
 		return s;
 	}
