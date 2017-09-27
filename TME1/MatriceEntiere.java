@@ -89,7 +89,7 @@ public class MatriceEntiere{
 
 			for (i=0; i<this.lignes; i++){
 				for (j=0; j<this.colonnes; j++){
-					int val = this.tableau[i][j]*B.getElem(
+					int val = this.tableau[i][j]*B.getElem(i, j);
 					s = s + val + " ";
 				}
 				s = s + "\n";
@@ -99,12 +99,14 @@ public class MatriceEntiere{
 	}	
 	
 	public void produitScalaire(int k){
-	
+		String s = "";
 		for(int i=0; i<this.lignes;i++){
-			for(int j=0; j<this.colonnes();j++){
-				this.tableau[i][j]=this.tableau[i][j]*k;
+			for(int j=0; j<this.colonnes;j++){
+				s += this.tableau[i][j]*k + " ";
 			}
+			s += "\n";
 		}
+		System.out.println(s);
 	}
 	
 	public void produit(MatriceEntiere B) throws TaillesNonConcordantesException{
@@ -112,7 +114,20 @@ public class MatriceEntiere{
 			throw new TaillesNonConcordantesException("Matrices non compatibles");
 		}
 		else{
-			
+			String s = "";
+			for(int i=0; i<this.lignes;i++){
+				for(int j=0; j<B.getColonnes();j++){
+					int res = 0;
+					for (int k=0; k<this.colonnes; k++){
+						res += this.tableau[i][k] * B.getElem(k, j);
+					}
+					s = s + res + " ";
+				}
+				s = s + "\n";
+			}
+			System.out.println(s);
+		}
+	}	
 	
 	public int getElem(int i, int j){
 		return this.tableau[i][j];
