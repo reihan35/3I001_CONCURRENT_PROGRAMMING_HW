@@ -1,17 +1,29 @@
 public class TestReservations{
 	public static void main(String[]args){
-		Salle s = new Salle(2,2);
 		
+			
+		Salle s = new Salle(5,5);
+		
+
+		System.out.println(s.toString());
 		Thread t1=new Thread(new Groupe(3,s));
 		t1.run();
-		Thread t2=new Thread(new Groupe(2,s));
+		System.out.println(s.toString());
+
+		System.out.println(s.toString());
+		Thread t2=new Thread(new Groupe(10,s));
 		t2.run();
-		Thread t3=new Thread(new Groupe(1,s));
+		System.out.println(s.toString());
+
+		Thread t3=new Thread(new Groupe(3,s));
 		t3.run();
+		System.out.println(s.toString());
+
+		Thread t4=new Thread(new Groupe(4,s));
+		t4.run();
+		System.out.println(s.toString());
+
 		
-		/*System.out.println(s.nContiguesAuRangI(3,2));
-		System.out.println(s.reserverContigues(2));
-		System.out.println(s.reserver(2));*/
 		
 	}
 }

@@ -41,43 +41,50 @@ public class Salle{
 	
 	public int nContiguesAuRangI (int n, int i){
 		
-		int nbr=0;
-		int c=0;
-		int j;
+		int j=0;
 		
-		for(j=0;j<nbPlacesParRang;j++){
-			/*if(tableau[i][j]){
-				c=j;*/
-				while(tableau[i][j]&&nbr<n){
-					c=j;
-					nbr++;
-				}
-			/*}*/
+		while(tableau[i][j]==false && j<nbPlacesParRang){
+			j++;
+		} // tant qu'on est pas arrivé au premier bloc true on parcours la ligne
+		if(j<nbPlacesParRang){
+		
+		int c=j; //des qu'on l'a trouvé on le sauvgarde
+		
+		int k=c;
+		
+		while (k<nbPlacesParRang && tableau[i][k]){
+			k++;
+		}//on parcours la ligne tant qu'on est true
+
+		if (k>n || k==n){
+			return c; //si le nbr de true est sup ou egal a n on est bon et si non on retourne -1
 		}
 		
-		if(nbr==n){
-			return j-nbr;
 		}
 		
-		else{
 		
 			return -1;		
 		
-		}
 
 	}
 	
 	public synchronized boolean reserverContigues(int n){
-		for(int i=0;i<nbRangs;i++){
-			if(nContiguesAuRangI (n,i)!=-1){
-				int c=nContiguesAuRangI (n,i);
-				for(int j=c;j<n;j++){
-					tableau[i][j]=false;
+		if(n<this.nbPlacesParRang || n==nbPlacesParRang){
+			for(int i=0;i<nbRangs;i++){
+				if(nContiguesAuRangI (n,i)!=-1){
+					int c=nContiguesAuRangI (n,i);
+					for(int j=c;j<n;j++){
+						tableau[i][j]=false;
+					}
+					break;
+					
 				}
 				
-				return true;
-			}
+				else{
+						return false;
+					}
 			
+			}return true;
 		}
 		return false;
 	}
@@ -87,20 +94,32 @@ public class Salle{
 		boolean cap = capaciteOK(n);
 		
 		if(cap==true){
-			
+			while(n>0){
 				for(int i=0;i<nbRangs;i++){
 					for(int j=0;j<nbPlacesParRang;j++){
-						if(tableau[i][j]==true){
-							while(n>0){
+						while(tableau[i][j]==true && n>0){
 							tableau[i][j]=false;
 							n--;						
-							}
 						}
 					}
 				}
-			return true;	
+				
+			
+			}
+			return true;
 		}
-		return false;
+		return false;	
+	}
+
+	public String toString(){
+		String s = "";
+		for(int i=0; i<this.nbRangs; i++){
+			for(int j=0; j<this.nbPlacesParRang; j++){
+				s = s + Boolean.toString(tableau[i][j]) + " "; 
+			}
+				s = s + "\n";
+		}
+		return s;
 	}
 	
 }

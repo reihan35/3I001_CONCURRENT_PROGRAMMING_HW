@@ -1,13 +1,17 @@
  public class Groupe implements Runnable{
  	
- 	private	 static int id=0; //je vais corriger ca apres
+	private static int cpt=1;
+ 	private	 static final Object mutex = new Object();
+	private int id;
  	private int nb;
  	private Salle s;
  	
  	public Groupe(int nb,Salle s){
- 		this.nb=nb;
+		synchronized(mutex){
+			id=cpt++;
+		} 		
+		this.nb=nb;
  		this.s=s;
- 		id++;
  	}
  	
  	public void run(){
@@ -17,8 +21,8 @@
 		}
 		
  		else{
- 			if (s.reserverContigues(nb)){
- 				System.out.println("Group "+id+" a reservé "+nb+" places Contigues\n");
+ 			if (s.reserver(nb)){
+ 				System.out.println("Group "+id+" a reservé "+nb+" places \n");
  			}
  			else{
  		
