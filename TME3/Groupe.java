@@ -1,38 +1,26 @@
- public class Groupe implements Runnable{
- 	
-	private static int cpt=1;
- 	private	 static final Object mutex = new Object();
-	private int id;
- 	private int nb;
- 	private Salle s;
- 	
- 	public Groupe(int nb,Salle s){
-		synchronized(mutex){
-			id=cpt++;
-		} 		
-		this.nb=nb;
- 		this.s=s;
- 	}
- 	
- 	public void run(){
- 		
-		if(s.reserverContigues(nb)){
-			System.out.println("Group "+id+" a reservé "+nb+" place Contigues\n");
-		}
-		
- 		else{
- 			if (s.reserver(nb)){
- 				System.out.println("Group "+id+" a reservé "+nb+" places \n");
- 			}
- 			else{
- 		
- 			if(s.reserver(nb)==false){
- 				System.out.println("Plus de places ! desolee ");
- 			}
- 			}
- 		}
- 	
- 		}
- 	
- 	
- }
+public class Groupe implements Runnable{
+  private int nb;
+  private Salle s;
+  private static int cpt=0;
+  private int id;
+
+  public Groupe(int nb, Salle s){
+    this.nb = nb;
+    this.s = s;
+    this.id = cpt++;
+  }
+
+  public void run(){
+    System.out.println("Le groupe " + id + " veut réserver.");
+    if (s.reserver(nb)){
+      System.out.println("Le groupe " + id + " a reservé " + nb + " places.");
+    }
+    else{
+      System.out.println("Plus de place libre pour accueillir " + nb + " personnes.");
+    }
+    System.out.println("Le groupe " + id + " a terminé sa réservation.");
+  }
+
+}
+
+ 

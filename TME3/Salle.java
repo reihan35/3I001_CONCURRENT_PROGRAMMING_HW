@@ -1,125 +1,121 @@
-public class Salle{
-	
-	private boolean[][] tableau;
-	private int nbRangs;
-	private int nbPlacesParRang;
-	
-	
-	public Salle(int nbRangs,int nbPlacesParRang){
-	
-	this.nbPlacesParRang=nbPlacesParRang;
-	this.nbRangs=nbRangs;
-	this.tableau = new boolean[nbPlacesParRang][nbRangs];
-		for(int i=0;i<nbRangs;i++){
-			for(int j=0;j<nbPlacesParRang;j++){
-				tableau[i][j]=true;
+public class Salle{  
+ private boolean[][] placesLibres;
+ private int nbRangs;
+ private int nbPlacesParRang;
+
+ public Salle(int nbRangs, int nbPlacesParRang){
+		this.nbRangs = nbRangs;
+		this.nbPlacesParRang = nbPlacesParRang;
+		placesLibres = new boolean[nbRangs][nbPlacesParRang];
+
+		for (int i=0; i<nbRangs; i++){
+			for (int j=0; j<nbPlacesParRang; j++){
+				placesLibres[i][j] = true;
 			}
 		}
-	
-	
-	}
-	
-	
+ }
+
 	public boolean capaciteOK(int n){
-		int nbr=0;
-		for(int i=0;i<nbRangs;i++){
-			for(int j=0;j<nbPlacesParRang;j++){
-				if(tableau[i][j]){
-				nbr++;
+		int k = 0;
+
+		for (int i=0; i<nbRangs; i++){
+			for (int j=0; j<nbPlacesParRang; j++){
+				if (placesLibres[i][j]){
+					k++;
+				}
+				if (k == n){
+					return true;
 				}
 			}
-		}
-	
-		if(nbr>n || nbr==n){
-			return true;
-		}
-		
-		else{
-			return false;
-		}
-	}
-	
-	public int nContiguesAuRangI (int n, int i){
-		
-		int j=0;
-		
-		while(tableau[i][j]==false && j<nbPlacesParRang){
-			j++;
-		} // tant qu'on est pas arrivé au premier bloc true on parcours la ligne
-		if(j<nbPlacesParRang){
-		
-		int c=j; //des qu'on l'a trouvé on le sauvgarde
-		
-		int k=c;
-		
-		while (k<nbPlacesParRang && tableau[i][k]){
-			k++;
-		}//on parcours la ligne tant qu'on est true
-
-		if (k>n || k==n){
-			return c; //si le nbr de true est sup ou egal a n on est bon et si non on retourne -1
-		}
-		
-		}
-		
-		
-			return -1;		
-		
-
-	}
-	
-	public synchronized boolean reserverContigues(int n){
-		if(n<this.nbPlacesParRang || n==nbPlacesParRang){
-			for(int i=0;i<nbRangs;i++){
-				if(nContiguesAuRangI (n,i)!=-1){
-					int c=nContiguesAuRangI (n,i);
-					for(int j=c;j<n;j++){
-						tableau[i][j]=false;
-					}
-					break;
-					
-				}
-				
-				else{
-						return false;
-					}
-			
-			}return true;
 		}
 		return false;
 	}
-		
-	
-	public synchronized boolean  reserver(int n){
-		boolean cap = capaciteOK(n);
-		
-		if(cap==true){
-			while(n>0){
-				for(int i=0;i<nbRangs;i++){
-					for(int j=0;j<nbPlacesParRang;j++){
-						while(tableau[i][j]==true && n>0){
-							tableau[i][j]=false;
-							n--;						
-						}
-					}
-				}
-				
-			
-			}
-			return true;
+
+	public int nContiguesAuRangI(int n, int i){
+		int k;
+		int j = 0;	
+
+		while ((j < nbPlacesParRang) && (!placesLibres[i][j])){
+			j++;
 		}
-		return false;	
+
+		if (j != nbPlacesParRang){
+			k = 0;
+			while ((k < nbPlacesParRang) && (placesLibres[i][k])){
+				k++;
+				if (k == n){
+					return j;
+				}
+			}	
+		}
+
+		return -1;
 	}
 
-	public String toString(){
+  public synchronized boolean reserverContigues(int n){
+    int i = 0;
+
+    while (i < nbRangs){
+      int res = nContiguesAuRangI(n, i);
+      if (res != -1){
+        for (int j = res; j < res + n; j++){
+          placesLibres[i][j] = false;
+        }
+        return true;
+      }
+      i++;
+    }
+    return false;
+  }
+
+  synchronized public boolean reserver(int n){
+    boolean capacite = capaciteOK(n);
+    int nbRes = 0;
+    boolean res = true;
+
+    if (!capacite){
+      res = false;
+    }
+    else{
+      boolean resContigue = reserverContigues(n);
+
+      if (resContigue){
+        System.out.println(toString());
+      }
+      else{
+        int i=0;
+
+        while ((i < nbRangs) && (nbRes < n)){
+          int j = 0;
+          while ((j < nbPlacesParRang) && (nbRes < n)){
+            if (placesLibres[i][j]){
+              placesLibres[i][j] = false;
+              nbRes++;
+            }
+            j++;
+          }
+          i++;
+        }
+      }
+     }
+
+		System.out.println(toString());
+    return res;
+  }
+
+  public String toString(){
 		String s = "";
-		for(int i=0; i<this.nbRangs; i++){
-			for(int j=0; j<this.nbPlacesParRang; j++){
-				s = s + Boolean.toString(tableau[i][j]) + " "; 
+		for (int i=0; i<nbRangs; i++){
+			for (int j=0; j<nbPlacesParRang; j++){
+				if (placesLibres[i][j]){
+					s += "| ";
+				}else{
+					s += "X ";
+				}
 			}
-				s = s + "\n";
+			s += "\n";
 		}
 		return s;
-	}
-	
+  }
 }
+
