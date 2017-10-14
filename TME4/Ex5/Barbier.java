@@ -15,6 +15,7 @@ public class Barbier implements Runnable{
 						System.out.println("Le barbier attend impatiemment ...");
 						s.wait();
 					}
+					s.coiffer();
 				}
 			}catch(InterruptedException e){
 				System.out.println("Ciao ciao le barbier o/");
