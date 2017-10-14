@@ -31,14 +31,12 @@ public class Client implements Runnable {
 		if (!s.salonPlein()){
 			s.arrivee_client(this);
 			
-			try{
-				Thread.sleep(5);
-			}catch(InterruptedException e){};
 			/* tant que le barbier est occupé */
 			while(s.barbierOccupe()){
 				this.attendre(); /* chaque client qui attend a son propre moniteur */
 			}
-			s.coiffer();
+
+			/* s.coiffer(); */
 		}else{
 			System.out.println("Plus de place dans le salon pour le client " + id + ".");
 		}
