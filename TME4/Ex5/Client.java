@@ -19,11 +19,13 @@ public class Client implements Runnable {
 	}
 	
 	synchronized public void attendre(){
-		try{
-			System.out.println("Le client numéro " + id + " attend impatiemment.");
-			wait();
-		}catch(InterruptedException e){
-			System.out.println(e.getMessage());
+		while(s.barbierOccupe()){
+			try{
+				System.out.println("Le client numéro " + id + " attend impatiemment.");
+				wait();
+			}catch(InterruptedException e){
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 		
@@ -32,11 +34,10 @@ public class Client implements Runnable {
 			s.arrivee_client(this);
 			
 			/* tant que le barbier est occupé */
-			while(s.barbierOccupe()){
+		//	while(s.barbierOccupe()){
 				this.attendre(); /* chaque client qui attend a son propre moniteur */
-			}
+		//	}
 
-			/* s.coiffer(); */
 		}else{
 			System.out.println("Plus de place dans le salon pour le client " + id + ".");
 		}
