@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class AleaStock{
 	private int taille;
 	private AleaObjet[] stock;
@@ -6,11 +8,15 @@ public class AleaStock{
 	public AleaStock(int taille){
 		this.taille=taille;
 		this.nbRestants = taille;
-		for(int x;x<this.taille;i++){
-			stock[i]=AleaObjet(10,2);
+		this.stock = new AleaObjet[taille];
+
+		for(int i=0;i<this.taille;i++){
+			stock[i]= new AleaObjet(10,2);
+			System.out.println(stock[i].toString());
 		}
 	}
 	
+	/* appelée par le chargeur pour prendre des marchandises */
 	public AleaObjet getMarchandise(){
 		AleaObjet marchandise = stock[nbRestants-1];
 		nbRestants--;

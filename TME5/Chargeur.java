@@ -7,12 +7,16 @@ public class Chargeur implements Runnable{
 		this.stock = stock;
 	}
 	
-
 	public void run(){
+		/* tant qu'il reste des marchandises */
 		while (!stock.estVide()){
 			AleaObjet marchandise;
 			marchandise = stock.getMarchandise();
-			chariot.empiler();
+			try{
+				chariot.empiler(marchandise);
+			}catch(InterruptedException e){
+				System.out.println("Oh! Surprise!");
+			}
 		}
 	}
 	
