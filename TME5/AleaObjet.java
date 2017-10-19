@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class AleaObjet{
 	private int min,max;
 	private int poids;
@@ -6,6 +8,7 @@ public class AleaObjet{
 	public AleaObjet(int max,int min){
 		this.min=min;
 		this.max=max;
+		this.r = new Random();
 		this.poids = min + r.nextInt(max-min);
 	}
 	
@@ -14,7 +17,7 @@ public class AleaObjet{
 	}
 	
 	public String toString(){
-		return "marchandise de poids "+this.poids+".\n";
+		return "Marchandise de poids "+this.poids;
 	}
 	
 }
