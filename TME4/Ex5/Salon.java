@@ -36,7 +36,7 @@ public class Salon{
 		Client nextClient; /* le prochain client dans la file d'attente */
 		Client currentClient;
 		barbierOccupe = true; /* les autres clients doivent attendre */
-	
+		
 		currentClient = clients.get(0);
 		System.out.println("Le barbier coupe les tiff du client " + currentClient.getId() + ".");
 		clients.remove(0);
