@@ -18,6 +18,13 @@ public class Chargeur implements Runnable{
 				System.out.println("Oh! Surprise!");
 			}
 		}
+		AleaObjet terminaison;
+		terminaison = new AleaObjet();
+		try{
+			chariot.empiler(terminaison);
+		}catch(InterruptedException e){
+			System.out.println("Oh! Surprise");
+		}
 	}
 	
 }

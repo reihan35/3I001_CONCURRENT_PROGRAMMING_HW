@@ -11,6 +11,10 @@ public class AleaObjet{
 		this.r = new Random();
 		this.poids = min + r.nextInt(max-min);
 	}
+
+	public AleaObjet(){
+		this.poids = -1;
+	}
 	
 	public int getPoids(){
 		return this.poids;

@@ -8,7 +8,7 @@ public class AleaStock{
 	public AleaStock(int taille){
 		this.taille=taille;
 		this.nbRestants = taille;
-		this.stock = new AleaObjet[taille];
+		this.stock = new AleaObjet[taille+1];
 
 		for(int i=0;i<this.taille;i++){
 			stock[i]= new AleaObjet(10,2);
