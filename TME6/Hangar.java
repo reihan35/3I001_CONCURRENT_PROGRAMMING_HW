@@ -1,7 +1,7 @@
 public class Hangar{
-	private static int cpt=0;
+	private static int cpt=1;
 	private int id;
-	private static Object mutex;
+	private static Object mutex = new Object();
 	private boolean libre;
 	
 	public Hangar(){
