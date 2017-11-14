@@ -30,7 +30,7 @@ public class Salon{
 		}
 	}
 	
-	/* appelée par le client lorsque c'est à son tour de se faire couper les cheveux  
+	/* appelée par le barbier lorsqu'il doit coiffer un nouveau client  
 		synchronisé sur le moniteur du salon */
 	synchronized public void coiffer(){
 		Client nextClient; /* le prochain client dans la file d'attente */
@@ -45,9 +45,9 @@ public class Salon{
 		System.out.println("Ciao ciao client " + currentClient.getId() + "!");
 		
 		barbierOccupe = false;
-		if (nbClients != 0){
-			nextClient = clients.get(0);
-			nextClient.notifier();
+		if (nbClients != 0){ /* si il reste des clients */
+			nextClient = clients.get(0); /* récupération du premier client qui attend */
+			nextClient.notifier(); /* réveil de ce client */
 		}
 
 	}

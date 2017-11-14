@@ -1,19 +1,25 @@
 public class PoolHangars{
-	private int[] hangars;
+	private Hangar[] hangars;
 	private int nbHangars;
 	
 	public PoolHangars(int nbHangars){
 		this.nbHangars = nbHangars;
-		hangars = new Hangar[nbHangars];
+		hangars = new Hangar[nbHangars+1];
 		
-		for (int i=0; i<nbHangars; i++){
+		for (int i=1; i<=nbHangars; i++){
 			hangars[i] = new Hangar(); 
 		}
 	}
 	
 	/* pour récupérer un hangar */
-	private Hangar getHangar(int i){
-		return hangars[i];
+	public Hangar getHangar(int i){
+		int k=i;
+		if (k == 0)
+			k = 1;
+		while ((!(hangars[k].est_libre())) && (k<=nbHangars))
+			k++;
+		System.out.println("Hangar libre : hangar numéro " + k);
+		return hangars[k];
 	}
 	
 	/* récupérer le premier hangar disponible 

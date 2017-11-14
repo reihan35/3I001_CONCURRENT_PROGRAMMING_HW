@@ -18,8 +18,9 @@ public class Client implements Runnable {
 		System.out.println("Le barbier a réveillé le client " + id + ".");
 	}
 	
+	/* appelée par le client lui même pour attendre si le barbier est occupé */
 	synchronized public void attendre(){
-		while(s.barbierOccupe()){
+		while(s.barbierOccupe()){ /* attente tant que le barbier est occupé */
 			try{
 				System.out.println("Le client numéro " + id + " attend impatiemment.");
 				wait();
@@ -32,12 +33,7 @@ public class Client implements Runnable {
 	public void run(){
 		if (!s.salonPlein()){
 			s.arrivee_client(this);
-			
-			/* tant que le barbier est occupé */
-		//	while(s.barbierOccupe()){
-				this.attendre(); /* chaque client qui attend a son propre moniteur */
-		//	}
-
+			this.attendre(); /* chaque client qui attend a son propre moniteur */
 		}else{
 			System.out.println("Plus de place dans le salon pour le client " + id + ".");
 		}
