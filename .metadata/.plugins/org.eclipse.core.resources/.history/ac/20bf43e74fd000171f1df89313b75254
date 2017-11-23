@@ -1,0 +1,7 @@
+package Exo11;
+
+import java.util.Random;
+
+public class ReponseRequete extends Random {
+
+}
