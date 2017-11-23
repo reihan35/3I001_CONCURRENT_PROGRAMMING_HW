@@ -1,0 +1,16 @@
+package Exo11;
+
+public class Client implements Runnable {
+	private Serveur s;
+	private int id;
+	
+	public void requeteServie(ReponseRequete r){
+		
+		
+	}
+	
+	public void run() {
+		
+	}
+
+}
