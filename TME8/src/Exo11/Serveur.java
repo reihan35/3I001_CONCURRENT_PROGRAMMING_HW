@@ -8,49 +8,78 @@ public class Serveur implements Runnable {
 	private int type;
 	private boolean dispo = true;
 	private boolean recuReq = false;
-	private boolean traitementFini = false;
 	private ReentrantLock lock = new ReentrantLock();
-	private Condition serveurOccupe = lock.newCondition();
+	private Condition estDispo = lock.newCondition();
 	private Condition aReq = lock.newCondition();
 	
-	public void soumettre(Client c,int numReq,int type ){
+	
+	public void soumettre(Client c,int numReq,int type) throws InterruptedException{
 		lock.lock();
 		try{
-			while (!traitementFini)
-				serveurOccupe.await();
-			
+			while (!dispo){ // attente si le serveur est en train de traiter une autre requête 
+				System.out.println("Client " + c.getId() + " : j'attend impatiemment le serveur.");
+				estDispo.await();
+			}
+			System.out.println("Client " + c.getId() + " : je peux soumettre ma requête!");
 			this.c = c;
 			this.numReq = numReq;
 			this.type = type;
 			this.dispo = false;
-			aReq.signal();
-			
-		} finally {
+			this.recuReq = true;
+			aReq.signal(); // réveille le serveur en attente d'une requête 
+		} finally{
 			lock.unlock();
 		}
 	}
 	
-	public void attendreRequete(){
+	public void attendreRequete() throws InterruptedException{
 		lock.lock();
 		try{
-			while (!recuReq)
+			while (!recuReq){ // tant qu'il n'a pas reçu de requête, le serveur attend
+				System.out.println("Serveur : je m'endors en attente d'une requête...");
 				aReq.await();
-		
+			}
+			System.out.println("Serveur : Oh surprise! J'ai été réveillé!");
 			dispo = false;
 		} finally {
 			lock.unlock();
 		}
 	}
 	
-	public void traiterRequete(){
+	/* Q6 */
+	public void traiterRequete() throws InterruptedException{
 		lock.lock();
+		Esclave e;
 		try{
-			c.requeteServie(new ReponseRequete(numReq,c));
+			e = new Esclave(c, numReq, type);
+			new Thread(e).start();
+			System.out.println("Serveur : j'ai un peu la flemme de traiter la requête " + numReq + " de " + c.getId() + " du coup j'ai crée l'esclave " + e.getId());
+			dispo = true;
+			recuReq = false;
+			estDispo.signalAll();
 		} finally {
 			lock.unlock();
 		}
 	}
 	
+/*
+	public void traiterRequete() throws InterruptedException{
+		lock.lock();
+		try{
+			System.out.println("Serveur : je traite une requête de type " + type);
+			if (type == 1){
+				Thread.sleep(5);
+			} else {
+				while (true);
+			}
+			c.requeteServie(new ReponseRequete(numReq,c));
+			dispo = true;
+			estDispo.notifyAll();
+		} finally {
+			lock.unlock();
+		}
+	}
+*/	
 	public void run(){
 		try{
 			while(true){

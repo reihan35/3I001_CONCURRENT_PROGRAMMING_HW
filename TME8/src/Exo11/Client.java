@@ -1,10 +1,13 @@
 package Exo11;
 
+import java.util.Random;
+
 public class Client implements Runnable {
 	private Serveur s;
 	private int id;
 	private int type;
-	/*private boolean requeteTraitee = false;*/
+	private boolean requeteTraitee = false;
+	private Random r = new Random();
 	
 	public Client(Serveur s, int id){
 		this.s = s;
@@ -15,16 +18,33 @@ public class Client implements Runnable {
 			this.type = 2;
 	}
 	
-	public void requeteServie(ReponseRequete r){
-		
+	public synchronized void requeteServie(ReponseRequete r){
+		requeteTraitee = true;
+		System.out.println(r.toString());
+		notify();
+	}
+	
+	public synchronized void attendre() throws InterruptedException{
+		while (!requeteTraitee){
+			System.out.println("Client " + id + ": j'attend impatiemment qu'on traite ma requête.");
+			wait();
+		}
 	}
 	
 	public void run() {
 		for (int i=0; i<5; i++){
-			s.soumettre(this, i, type);
-		/*	while (!requeteTraitee)
-				attendre();*/
+			try{
+				s.soumettre(this, i, type);
+				attendre();
+				System.out.println("Client " + id + ": diable! Le serveur m'a réveillé!");
+				Thread.sleep(r.nextInt(10));
+			} catch(InterruptedException e){
+				e.printStackTrace();
+			}
 		}
 	}
-
+	
+	public int getId(){
+		return id;
+	}
 }
