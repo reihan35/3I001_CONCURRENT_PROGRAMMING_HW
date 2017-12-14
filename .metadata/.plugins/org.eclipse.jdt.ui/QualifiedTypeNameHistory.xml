@@ -4,5 +4,10 @@
 <fullyQualifiedTypeName name="java.util.Random"/>
 <fullyQualifiedTypeName name="java.util.concurrent.locks.ReentrantLock"/>
 <fullyQualifiedTypeName name="java.util.concurrent.locks.Condition"/>
+<<<<<<< HEAD
 <fullyQualifiedTypeName name="java.util.concurrent.Semaphore"/>
+=======
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+>>>>>>> a68a837a15470453dc522d971c6f751a0875551a
 </qualifiedTypeNameHistroy>
