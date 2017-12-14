@@ -1,0 +1,10 @@
+package ex14;
+
+public class TestBabouin {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

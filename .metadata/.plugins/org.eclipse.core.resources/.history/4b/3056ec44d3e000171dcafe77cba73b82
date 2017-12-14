@@ -1,0 +1,61 @@
+package ex14;
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Corde {
+	
+	/* Q1
+	private Position sensUtilisation = null;
+	private int cpt = 0;
+	
+	public synchronized void acceder(Position position) throws InterruptedException{
+		while (sensUtilisation != position && sensUtilisation != null){
+			wait();
+		}
+		if (sensUtilisation == null){
+			sensUtilisation = position;
+		}
+		cpt++;
+	}
+	
+	public synchronized void lacher(Position position){
+		cpt--;
+		if (cpt == 0){
+			sensUtilisation = null;
+			notifyAll();
+		}
+	}*/
+	
+	/*Q2*/
+	
+	private Position sensUtilisation = null;
+	private int cpt = 0;
+	private ReentrantLock lock = new ReentrantLock();
+	private final Condition accesOk = lock.newCondition();
+	private final Condition capOk = lock.newCondition();
+	
+	public void acceder(Position position) throws InterruptedException{
+		
+		lock.lock();
+	
+		try{
+			while (sensUtilisation != position && sensUtilisation != null){
+				accesOk.await();
+				
+			}
+			
+			while(sensUtilisation == position && cpt>5 ){
+				capOk.await();
+			}
+			if (sensUtilisation == null){
+				sensUtilisation = position;
+			}
+			cpt++;
+		}
+		finally{
+			lock.unlock();
+		}
+	}
+	
+}

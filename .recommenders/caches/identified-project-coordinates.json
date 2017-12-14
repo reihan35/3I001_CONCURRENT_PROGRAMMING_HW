@@ -1,1 +1,5 @@
+<<<<<<< HEAD
+[[{"location":"/users/nfs/Etu2/3535002/3I001/TME10","type":"PROJECT","hints":{"PROJECT_NAME":"TME10"}},"ABSENT"],[{"location":"/usr/lib/jvm/jdk1.8.0_45","type":"JRE","hints":{"EXECUTION_ENVIRONMENT":"JavaSE-1.8"}},"jre:jre:1.8.0"]]
+=======
 [[{"location":"/Users/lauranguyen/Documents/UPMC/L3/S5/3I001/TME_binome/TME8","type":"PROJECT","hints":{"PROJECT_NAME":"TME8"}},"ABSENT"],[{"location":"/Library/Java/JavaVirtualMachines/jdk1.8.0_101.jdk/Contents/Home","type":"JRE","hints":{"EXECUTION_ENVIRONMENT":"JavaSE-1.8"}},"jre:jre:1.8.0"]]
+>>>>>>> a68a837a15470453dc522d971c6f751a0875551a
