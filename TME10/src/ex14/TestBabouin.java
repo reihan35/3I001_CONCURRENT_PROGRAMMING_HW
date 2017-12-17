@@ -4,9 +4,9 @@ public class TestBabouin {
 
 	public static void main(String[] args) {
 		Corde laCorde = new Corde();
-		Babouin[] babouins = new Babouin[100];
+		Babouin[] babouins = new Babouin[10];
 		
-		for (int i=0; i<100; i++){
+		for (int i=0; i<babouins.length; i++){
 			Position p;
 			if (i%2 == 0){
 				p = Position.NORD;
@@ -17,6 +17,8 @@ public class TestBabouin {
 			babouins[i] = new Babouin(laCorde, p);
 			new Thread(babouins[i]).start();
 		}
+		new Thread(new BabouinKong(laCorde)).start();
+
 	}
 
 }
