@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-<<<<<<< HEAD
-<typeInfo handle="=TMESOLO/\/usr\/lib\/jvm\/jdk1.8.0_45\/jre\/lib\/rt.jar&lt;java.lang(Runnable.class[Runnable" modifiers="1537" timestamp="1428686542000"/>
-=======
-<typeInfo handle="=TME8/\/Library\/Java\/JavaVirtualMachines\/jdk1.8.0_101.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;java.lang(Runnable.class[Runnable" modifiers="1537" timestamp="1466589303000"/>
->>>>>>> a68a837a15470453dc522d971c6f751a0875551a
+<typeInfo handle="=TME10/\/Library\/Java\/JavaVirtualMachines\/jdk1.8.0_101.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;java.lang(Runnable.class[Runnable" modifiers="1537" timestamp="1466589303000"/>
 </typeInfoHistroy>

@@ -1,0 +1,11 @@
+package ex15;
+
+public class Signaleur implements Runnable {
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

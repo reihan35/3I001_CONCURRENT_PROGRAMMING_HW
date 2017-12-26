@@ -1,0 +1,11 @@
+package exo13;
+
+public class Servant implements Runnable {
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,20 @@
+package ex15;
+
+public class Restaurant {
+	private int nbTablesDispo;
+	
+	public Restaurant(int nbTables){
+		nbTablesDispo = nbTables;
+	}
+	
+	public synchronized Integer reserver(int nbPersonnes){
+		if (nbPersonnes > nbTablesDispo * 2){
+			return null;
+		}else{
+			int numTable = nbTablesDispo;
+			nbTablesDispo = nbTablesDispo - (nbPersonnes%2);
+			return (Integer)numTable;
+		}
+	}
+	
+}
