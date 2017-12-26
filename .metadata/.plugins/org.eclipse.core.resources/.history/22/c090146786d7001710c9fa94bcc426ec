@@ -1,0 +1,24 @@
+package exo13;
+
+import java.util.concurrent.Callable;
+
+public class Servant implements Callable<ReponseRequete> {
+	private Client client;
+	private int numReq;
+	private int type;
+
+	public Servant(Client c, int numR, int t){
+		client = c;
+		numReq = numR;
+		type = t;
+	}
+
+	public ReponseRequete call() {
+		if (type == 1){
+			return new ReponseRequete(client, numReq);
+		}else{
+			while(true);
+		}
+	}
+
+}

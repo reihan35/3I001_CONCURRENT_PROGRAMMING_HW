@@ -1,0 +1,39 @@
+package ex15;
+
+public class GroupeClients {
+	private int idGroupe;
+	private Restaurant r;
+	private int nbPersonnes;
+	private Thread[] t_clients;
+	private int numTable = -1;
+	
+	public GroupeClients(Restaurant r, int idGroupe, int nbPersonnes){
+		this.r = r;
+		this.idGroupe = idGroupe;
+		this.nbPersonnes = nbPersonnes;
+		t_clients = new Thread[nbPersonnes];
+		
+		for (int i=0; i<nbPersonnes; i++){
+			t_clients[i] = new Thread(new Client(i, idGroupe));
+			t_clients[i].start();
+		}
+	}
+	
+	public synchronized void reserver(int idClient) throws InterruptedException{
+		int num;
+		if (numTable == -1){
+			num = r.reserver(nbPersonnes);
+			if ((Integer)num == null){
+				System.out.println("Client " + idClient + " (groupe " + idGroupe + "): plus de place!");
+				System.out.println("Client " + idClient + " (groupe " + idGroupe + "): tout le monde se casse");
+				for (int i=0; i<nbPersonnes; i++){
+					t_clients[i].interrupt();
+				}
+				throw new InterruptedException();
+			}
+			else{
+				numTable = r;
+			}
+		}
+	}
+}

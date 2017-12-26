@@ -1,0 +1,22 @@
+package exo13;
+
+public class Servant implements Runnable {
+	private Client client;
+	private int numReq;
+	private int type;
+
+	public Servant(Client c, int numR, int t){
+		client = c;
+		numReq = numR;
+		type = t;
+	}
+
+	public void run() {
+		if (type == 1){
+			client.requeteServie(new ReponseRequete(client, numReq));
+		}else{
+			while(true);
+		}
+	}
+
+}
