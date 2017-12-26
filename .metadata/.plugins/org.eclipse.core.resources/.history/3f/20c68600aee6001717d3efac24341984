@@ -1,0 +1,24 @@
+package ex15;
+
+import java.util.concurrent.CyclicBarrier;
+
+public class Client implements Runnable {
+	private int idClient;
+	private int idGroupe;
+	private CyclicBarrier cb;
+	
+	public Client(int idClient, int idGroupe, CyclicBarrier cb){
+		this.idClient = idClient;
+		this.idGroupe = idGroupe;
+		this.cb = cb;
+	}
+	
+	public void run() {
+		try{
+			
+		}catch(InterruptedException e){
+			System.out.println("Client " + idClient + "(groupe " + idGroupe + "): plus de place je me casse");
+		}
+	}
+
+}
